@@ -11,14 +11,18 @@ export function Home() {
     ProdutosFavoritosContext
   );
 
-  const [produtos, setProdutos] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [produtos, setProdutos] = useState();
 
   async function buscarProdutos() {
+    setIsLoading(true);
     try {
       const response = await axios.get("https://dummyjson.com/products");
       setProdutos(response.data.products);
     } catch (error) {
       alert("Erro ao buscar produtos");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -26,11 +30,15 @@ export function Home() {
     buscarProdutos();
   }, []);
 
+  if (isLoading) {
+    return <p>carregando....</p>;
+  }
+
   return (
     <div>
       <button onClick={deslogarUsuario}>Sair</button>
       <button onClick={() => navigate("/favoritos")}>Ver favoritos</button>
-      {produtos.map((produto) => (
+      {produtos?.map((produto) => (
         <div>
           <h3>{produto.title}</h3>
           <img src={produto.thumbnail} />
