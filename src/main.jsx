@@ -1,6 +1,5 @@
 import { createRoot } from "react-dom/client";
 import { Routes } from "./routes";
-
 import { AuthContextProvider } from "./contexts/auth-context";
 import { ProdutosFavoritosProvider } from "./contexts/produtos-favoritos-context";
 
